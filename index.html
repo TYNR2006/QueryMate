@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBMS Learning Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>DBMS Learning Assistant</h1>
+            <p>Your AI-powered guide to mastering Database Management Systems</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="learning-modes">
+            <h2>Choose Your Learning Mode</h2>
+            <div class="mode-cards">
+                <div class="card" id="concept-mode">
+                    <h3>Concept Explorer</h3>
+                    <p>Understand database concepts with interactive visualizations</p>
+                    <button>Start Learning</button>
+                </div>
+                <div class="card" id="sql-mode">
+                    <h3>SQL Playground</h3>
+                    <p>Practice SQL queries with real-time feedback</p>
+                    <button>Start Coding</button>
+                </div>
+                <div class="card" id="quiz-mode">
+                    <h3>Knowledge Check</h3>
+                    <p>Test your understanding with adaptive quizzes</p>
+                    <button>Start Quiz</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="learning-area" id="concept-area">
+            <h2>Database Concepts</h2>
+            <div class="concept-selector">
+                <button class="concept-btn active" data-concept="relational">Relational Model</button>
+                <button class="concept-btn" data-concept="normalization">Normalization</button>
+                <button class="concept-btn" data-concept="transactions">Transactions</button>
+                <button class="concept-btn" data-concept="indexing">Indexing</button>
+            </div>
+            <div class="concept-content">
+                <div class="concept-explanation">
+                    <h3>Relational Database Model</h3>
+                    <p>The relational model organizes data into tables with rows and columns. Each table represents an entity, and relationships between entities are established through foreign keys.</p>
+                </div>
+                <div class="concept-visualization">
+                    <canvas id="concept-canvas" width="400" height="300"></canvas>
+                </div>
+                <div class="ai-assistant">
+                    <h3>Concept Assistant</h3>
+                    <div class="chat-container">
+                        <div id="concept-chat" class="chat-messages">
+                            <div class="message assistant">
+                                <p>Hello! I'm your DBMS Learning Assistant. What would you like to know about the relational model?</p>
+                            </div>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="concept-question" placeholder="Ask about this concept...">
+                            <button id="concept-ask">Ask</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="learning-area hidden" id="sql-area">
+            <h2>SQL Playground</h2>
+            <div class="sql-workspace">
+                <div class="sql-schema">
+                    <h3>Database Schema</h3>
+                    <div class="schema-diagram">
+                        <div class="table-card">
+                            <h4>Students</h4>
+                            <ul>
+                                <li><strong>student_id</strong> (PK)</li>
+                                <li>name</li>
+                                <li>email</li>
+                                <li>major</li>
+                            </ul>
+                        </div>
+                        <div class="table-card">
+                            <h4>Courses</h4>
+                            <ul>
+                                <li><strong>course_id</strong> (PK)</li>
+                                <li>title</li>
+                                <li>credits</li>
+                                <li>department</li>
+                            </ul>
+                        </div>
+                        <div class="table-card">
+                            <h4>Enrollments</h4>
+                            <ul>
+                                <li><strong>enrollment_id</strong> (PK)</li>
+                                <li>student_id (FK)</li>
+                                <li>course_id (FK)</li>
+                                <li>semester</li>
+                                <li>grade</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="sql-editor">
+                    <h3>Write Your SQL Query</h3>
+                    <textarea id="sql-query" placeholder="SELECT * FROM Students;"></textarea>
+                    <button id="run-query">Run Query</button>
+                    <div class="sample-tables">
+                        <h4>Available Tables</h4>
+                        <p><strong>Students:</strong> student_id, name, email, major</p>
+                        <p><strong>Courses:</strong> course_id, title, credits, department</p>
+                        <p><strong>Enrollments:</strong> enrollment_id, student_id, course_id, semester, grade</p>
+                    </div>
+                </div>
+                <div class="sql-results">
+                    <h3>Results</h3>
+                    <div id="query-results">
+                        <p>Your results will appear here...</p>
+                    </div>
+                </div>
+                <div class="ai-assistant">
+                    <h3>SQL Assistant</h3>
+                    <div class="chat-container">
+                        <div class="chat-messages" id="sql-chat">
+                            <div class="message assistant">
+                                <p>Need help with your SQL query? I can assist with syntax, optimization, or explaining results!</p>
+                            </div>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" id="sql-question" placeholder="Ask for help with your query...">
+                            <button id="sql-ask">Ask</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz-area" class="learning-area hidden">
+            <h2>Knowledge Check</h2>
+            <div class="quiz-container">
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">Question <span id="current-question">1</span> of <span id="total-questions">3</span></div>
+                </div>
+                <div class="quiz-question">
+                    <h3 id="question-text">What is the primary purpose of normalization in database design?</h3>
+                    <div class="quiz-options">
+                        <div class="option">
+                            <input type="radio" id="option1" name="answer" value="0">
+                            <label for="option1">To increase data redundancy</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="option2" name="answer" value="1">
+                            <label for="option2">To minimize data redundancy and improve data integrity</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="option3" name="answer" value="2">
+                            <label for="option3">To combine multiple tables into a single table</label>
+                        </div>
+                        <div class="option">
+                            <input type="radio" id="option4" name="answer" value="3">
+                            <label for="option4">To eliminate the need for foreign keys</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz-actions">
+                    <button id="submit-answer">Submit Answer</button>
+                    <button id="next-question" disabled>Next Question</button>
+                </div>
+                <div class="quiz-feedback hidden">
+                    <h3>Explanation</h3>
+                    <p id="answer-explanation">Normalization is a database design technique that reduces data redundancy and improves data integrity by organizing fields and tables in a database. It involves dividing large tables into smaller ones and defining relationships between them.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Created with TRAE SOLO - Demonstrating the power of AI-assisted learning</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
